@@ -14,8 +14,8 @@
     // Canvas setup
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 400;
-    canvas.height = 400;
+    canvas.width = 1920;
+    canvas.height = 1080;
 
     // Function to handle the OAuth 2.0 authentication flow
     function authenticateWithTwitch() {
@@ -61,23 +61,36 @@
       .then(data => {
         if (data.data.length > 0) {
           console.log('Active Hype Train:', data);
+          const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
+          const message = JSON.stringify(data);
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', discordWebhookUrl, true);
+          xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    
+          // Construct the message payload
+          const payload = JSON.stringify({
+            content: message,
+          });
+    
+          // Send the payload
+          xhr.send(payload);
+        
 
-          // Draw a yellow circle on the canvas
-          ctx.fillStyle = 'yellow';
-          ctx.beginPath();
-          ctx.arc(200, 200, 50, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.closePath();
         } else {
           console.log('No active Hype Train');
+          const message = "Geen hypetrain sukkel!"
           // Clear the canvas if no active Hype Train
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const img = new Image();
-          img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Crect x='20' y='30' width='160' height='40' fill='blue' /%3E%3Crect x='30' y='35' width='30' height='20' fill='white' /%3E%3Crect x='70' y='35' width='30' height='20' fill='white' /%3E%3Crect x='110' y='35' width='30' height='20' fill='white' /%3E%3Crect x='150' y='35' width='30' height='20' fill='white' /%3E%3Ccircle cx='50' cy='80' r='10' fill='black' /%3E%3Ccircle cx='150' cy='80' r='10' fill='black' /%3E%3C/svg%3E";
-          img.onload = function() {
-            ctx.drawImage(img, 0, 0);
-          };
-
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', discordWebhookUrl, true);
+          xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    
+          // Construct the message payload
+          const payload = JSON.stringify({
+            content: message,
+          });
+    
+          // Send the payload
+          xhr.send(payload);
         }
       })
       .catch(error => {
