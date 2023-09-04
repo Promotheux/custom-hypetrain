@@ -54,7 +54,7 @@
       }
 
       const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
-      const message = 'All contributors: ' + JSON.stringify(allContrubutions);
+      const message = 'All contributors: ' + JSON.stringify(allContributors);
       const xhr = new XMLHttpRequest();
       xhr.open('POST', webhookUrl, true);
       xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -82,7 +82,7 @@
         }, 2000);
 
         setInterval(function(){
-          updateUserNames(accessToken, allContrubutions);
+          updateUserNames(accessToken);
         }, 15000);
       })
       .catch(error => {
