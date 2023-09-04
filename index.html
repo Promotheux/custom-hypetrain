@@ -10,8 +10,7 @@
     // Define your Twitch API client ID and redirect URI
     const clientId = '8p069a6yd66co1xpzq2pmhrx0ykqxx';
     const redirectUri = 'https://custom-hypetrain.vercel.app/';
-    let eventData = {};
-    let userData = {};
+    let topContributionsHistory = {};
 
     // Canvas setup
     const canvas = document.getElementById('myCanvas');
@@ -63,8 +62,11 @@
       .then(data => {
         if (data.data.length > 0) {
             console.log('Active Hype Train:', data);
+            for(var j=0; j<data.data.length; j++) {
+    
+            }
             const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
-            const message = 'Current level: ' + data.data[0].level + '\n Time remaining: ' + data.data[0].time_remaining + '\n Contributers: ' + json.stringify(data.data[0].event_data.top_contributions) + '\n\n\n Raw data: ' + JSON.stringify(data);
+            const message = 'Current level: ' + data.data[0].level + '\n Time remaining: ' + data.data[0].time_remaining + '\n Contributers: ' + JSON.stringify(data.data[0].event_data.top_contributions) + '\n\n\n Raw data: ' + JSON.stringify(data);
             const xhr = new XMLHttpRequest();
             xhr.open('POST', webhookUrl, true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -76,8 +78,16 @@
       
             // Send the payload
             xhr.send(payload);
+
+            for(var i=0; data.data[0].event_data.top_contributions.length; i++) {
+                topContributionsHistory[data.data[0].event_data.top_contributions[i].user_name] = {
+                  'type': data.data[0].event_data.top_contributions[i].type,
+                  'amount': data.data[0].event_data.top_contributions[i].total
+                };
+            }
         } else {
           console.log('No active Hype Train');
+          topContributionsHistory = {};
         }
       })
       .catch(error => {
