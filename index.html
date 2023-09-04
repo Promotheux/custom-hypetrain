@@ -87,7 +87,8 @@
         if (data.data.length > 0) {
             console.log('Active Hype Train:', data);
             // Get the last_contribution and check if already in array
-            allContrubutions.push(getUsername(data.data[0].event_data.last_contribution.user));
+            window.HypeTrainData = data;
+            allContrubutions.push(getUsername(data.data[0].event_data.last_contribution));
 
             for(let i=0; i<allContrubutions.length; i++) {
               console.log(allContrubutions[i]);
