@@ -20,7 +20,8 @@
     // Function to handle the OAuth 2.0 authentication flow
     function authenticateWithTwitch() {
       // Define the authorization URL
-      const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+      // https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=gp762nuuoqcoxypju8c569th9wz7q5&redirect_uri=https://twitchtokengenerator.com&scope=channel:read:hype_train+user:read:subscriptions&state=frontend|U0FaQnZMak9UZmdIT3pIeVBEd1E4QT09&force_verify=true
+      const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&force_verify=true&scope=channel:read:hype_train+user:read:subscriptions`;
 
       // Redirect the user to Twitch for authentication
       window.location.href = authUrl;
