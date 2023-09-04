@@ -38,10 +38,7 @@
       .then(response => response.json())
       .then(data => {
         if (data.data.length > 0) {
-          const username = data.data[0].login;
-          console.log('Username:', username);
-          return username;
-          // Now you have the username, and you can use it as needed
+          return data.data[0].login;
         } else {
           console.log('User not found');
         }
@@ -92,6 +89,12 @@
             }
 
             console.log(allContrubutions);
+            const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
+            const message = 'All contributors: ' + allContrubutions.join(', ');
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', webhookUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.send(payload);
         } else {
           console.log('No active Hype Train');
           topContributionsHistory = {};
