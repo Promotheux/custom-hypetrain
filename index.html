@@ -50,7 +50,7 @@
     
     function updateUserNames(accessToken){
       for (var i=0; i<allContributors.length; i++){
-        userName = getUsername(accessToken, allContributors[i].userId);
+        var userName = getUsername(accessToken, allContributors[i].userId);
         allContributors[i].username = userName
       }
 
