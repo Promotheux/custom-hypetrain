@@ -81,20 +81,6 @@
           }
         } else {
           console.log('No active Hype Train');
-          const message = "Geen hypetrain sukkel!"
-          // Clear the canvas if no active Hype Train
-          const xhr = new XMLHttpRequest();
-          const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
-          xhr.open('POST', webhookUrl, true);
-          xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    
-          // Construct the message payload
-          const payload = JSON.stringify({
-            content: message,
-          });
-    
-          // Send the payload
-          xhr.send(payload);
         }
       })
       .catch(error => {
