@@ -105,7 +105,7 @@
             console.log('Active Hype Train:', data);
             lastUser = data.data[0].event_data.last_contribution.user;
             if (allContributors.includes(lastUser) == false) {
-              allContributors[lastUser] = {'userId': lastUser, 'username': ''};
+              allContributors.push({'userId': lastUser, 'username': ''});
             }
         } else {
           console.log('No active Hype Train');
