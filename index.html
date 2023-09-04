@@ -10,7 +10,7 @@
     // Define your Twitch API client ID and redirect URI
     const clientId = '8p069a6yd66co1xpzq2pmhrx0ykqxx';
     const redirectUri = 'https://custom-hypetrain.vercel.app/';
-    let allContrubutions = [];
+    let allContributors = [];
 
     // Canvas setup
     const canvas = document.getElementById('myCanvas');
@@ -50,7 +50,7 @@
     
     function updateUserNames(accessToken){
       for (var i=0; i<allContributors.length; i++){
-        allContrubutions[i].username = getUsername(accessToken, allContributors[i].userId);
+        allContributors[i].username = getUsername(accessToken, allContributors[i].userId);
       }
 
       const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
@@ -104,8 +104,8 @@
         if (data.data.length > 0) {
             console.log('Active Hype Train:', data);
             lastUser = data.data[0].event_data.last_contribution.user;
-            if (allContrubutions.includes(lastUser) == false) {
-              allContrubutions[lastUser] = {'userId': lastUser, 'username': ''};
+            if (allContributors.includes(lastUser) == false) {
+              allContributors[lastUser] = {'userId': lastUser, 'username': ''};
             }
         } else {
           console.log('No active Hype Train');
