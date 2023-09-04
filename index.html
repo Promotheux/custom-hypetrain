@@ -10,7 +10,7 @@
     // Define your Twitch API client ID and redirect URI
     const clientId = '8p069a6yd66co1xpzq2pmhrx0ykqxx';
     const redirectUri = 'https://custom-hypetrain.vercel.app/';
-    let currentHypeTrain = {};
+    let eventData = {};
     let userData = {};
 
     // Canvas setup
@@ -62,10 +62,9 @@
       .then(response => response.json())
       .then(data => {
         if (data.data.length > 0) {
-          if (currentHypeTrain === {}){
             console.log('Active Hype Train:', data);
             const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
-            const message = JSON.stringify(data);
+            const message = 'Current level: ' + data.data[0].level + '\n Time remaining: ' + data.data[0].time_remaining + '\n Contributers: ' + json.stringify(data.data[0].event_data.top_contributions) + '\n\n\n Raw data: ' + JSON.stringify(data);
             const xhr = new XMLHttpRequest();
             xhr.open('POST', webhookUrl, true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -77,7 +76,6 @@
       
             // Send the payload
             xhr.send(payload);
-          }
         } else {
           console.log('No active Hype Train');
         }
