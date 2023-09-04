@@ -72,6 +72,12 @@
           console.log('No active Hype Train');
           // Clear the canvas if no active Hype Train
           ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const img = new Image();
+          img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Crect x='20' y='30' width='160' height='40' fill='blue' /%3E%3Crect x='30' y='35' width='30' height='20' fill='white' /%3E%3Crect x='70' y='35' width='30' height='20' fill='white' /%3E%3Crect x='110' y='35' width='30' height='20' fill='white' /%3E%3Crect x='150' y='35' width='30' height='20' fill='white' /%3E%3Ccircle cx='50' cy='80' r='10' fill='black' /%3E%3Ccircle cx='150' cy='80' r='10' fill='black' /%3E%3C/svg%3E";
+          img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+          };
+
         }
       })
       .catch(error => {
