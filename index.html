@@ -38,7 +38,7 @@
       .then(response => response.json())
       .then(data => {
         if (data.data.length > 0) {
-          return data.data[0].login;
+          return data.data[0].display_name;
         } else {
           console.log('User not found');
         }
@@ -49,8 +49,8 @@
     }
     
     function updateUserNames(accessToken){
-      for (var i=0; i<contributors.length; i++){
-        allContrubutions[i].username = getUsername(accessToken, contributors[i].userId);
+      for (var i=0; i<allContributors.length; i++){
+        allContrubutions[i].username = getUsername(accessToken, allContributors[i].userId);
       }
 
       const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
