@@ -48,10 +48,10 @@
         throw error; // Re-throw the error to propagate it to the caller
       });
     }
-    
+
     function updateUserNames(accessToken){
       for (var i=0; i<allContributors.length; i++){
-        getUsername(accessToken, allContributors[i].userId).then(username => {
+        getUsername(accessToken, allContributors[i].userId).then(userName => {
           allContributors[i].username = userName;
         });
       }
