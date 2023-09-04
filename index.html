@@ -1,96 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+<html>
+<head>
+  <title>Twitch Hype Train Indicator</title>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+
+  <script>
+    // Define your Twitch API client ID and redirect URI
+    const clientId = '8p069a6yd66co1xpzq2pmhrx0ykqxx';
+    const redirectUri = 'https://custom-hypetrain.vercel.app/';
+
+    // Canvas setup
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 400;
+    canvas.height = 400;
+
+    // Function to handle the OAuth 2.0 authentication flow
+    function authenticateWithTwitch() {
+      // Define the authorization URL
+      const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+
+      // Redirect the user to Twitch for authentication
+      window.location.href = authUrl;
+    }
+
+    // Function to make an API request to get user information
+    function getUserInfo(accessToken) {
+      // Make an API request to the Twitch helix users endpoint
+      fetch('https://api.twitch.tv/helix/users', {
+        headers: {
+          'Client-ID': clientId,
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('User Info:', data);
+
+        // Check for an active Hype Train
+        checkHypeTrain(accessToken, data.data[0].id);
+      })
+      .catch(error => {
+        console.error('Error fetching user info:', error);
+      });
+    }
+
+    // Function to check for an active Hype Train
+    function checkHypeTrain(accessToken, userId) {
+      // Make an API request to the Twitch helix hype train events endpoint
+      fetch(`https://api.twitch.tv/helix/hypetrain/events?broadcaster_id=${userId}`, {
+        headers: {
+          'Client-ID': clientId,
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.data.length > 0) {
+          console.log('Active Hype Train:', data);
+
+          // Draw a yellow circle on the canvas
+          ctx.fillStyle = 'yellow';
+          ctx.beginPath();
+          ctx.arc(200, 200, 50, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.closePath();
+        } else {
+          console.log('No active Hype Train');
+          // Clear the canvas if no active Hype Train
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      })
+      .catch(error => {
+        console.error('Error checking Hype Train:', error);
+      });
+    }
+
+    // Check if the page has been redirected from Twitch with an access token
+    if (window.location.hash) {
+      const accessToken = window.location.hash.substring(1).split('&')[0].split('=')[1];
+      getUserInfo(accessToken);
+    } else {
+      // If not redirected, initiate the authentication flow
+      authenticateWithTwitch();
+    }
+  </script>
+</body>
 </html>
