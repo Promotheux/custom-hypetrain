@@ -84,7 +84,7 @@
         if (data.data.length > 0) {
             console.log('Active Hype Train:', data);
             lastUser = getUsername(accessToken, data.data[0].event_data.last_contribution.user);
-            if (!in_array(lastUser, allContrubutions)) {
+            if (allContrubutions.includes(lastUser) == false) {
               allContrubutions.push(lastUser);
             }
 
