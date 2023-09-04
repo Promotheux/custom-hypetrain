@@ -52,7 +52,7 @@
     function updateUserNames(accessToken){
       for (var i=0; i<allContributors.length; i++){
         getUsername(accessToken, allContributors[i].userId).then(userName => {
-          allContributors[i].username = userName;
+          allContributors[i] = {'userId': allContributors[i].userId, userName}
         });
       }
 
