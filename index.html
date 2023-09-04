@@ -30,7 +30,7 @@
     // Function to make an API request to get user information
     function getUserInfo(accessToken) {
       // Make an API request to the Twitch helix users endpoint
-      fetch('https://api.twitch.tv/helix/users?id=38486263', {
+      fetch('https://api.twitch.tv/helix/users', {
         headers: {
           'Client-ID': clientId,
           'Authorization': `Bearer ${accessToken}`
