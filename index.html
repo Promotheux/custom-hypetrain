@@ -50,7 +50,8 @@
     
     function updateUserNames(accessToken){
       for (var i=0; i<allContributors.length; i++){
-        allContributors[i].username = getUsername(accessToken, allContributors[i].userId);
+        userName = getUsername(accessToken, allContributors[i].userId);
+        allContributors[i].username = userName
       }
 
       const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
