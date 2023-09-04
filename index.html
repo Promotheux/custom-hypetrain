@@ -10,7 +10,7 @@
     // Define your Twitch API client ID and redirect URI
     const clientId = '8p069a6yd66co1xpzq2pmhrx0ykqxx';
     const redirectUri = 'https://custom-hypetrain.vercel.app/';
-    let topContributionsHistory = {};
+    let allContrubutions = [];
 
     // Canvas setup
     const canvas = document.getElementById('myCanvas');
@@ -86,26 +86,11 @@
       .then(data => {
         if (data.data.length > 0) {
             console.log('Active Hype Train:', data);
-            const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
-            const message = 'Current level: ' + data.data[0].event_data.level + '\n Time remaining: ' + data.data[0].event_data.expires_at + '\n Contributers: ' + JSON.stringify(data.data[0].event_data.top_contributions) + '\n\n\n Raw data: ' + JSON.stringify(data);
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', webhookUrl, true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-      
-            // Construct the message payload
-            const payload = JSON.stringify({
-              content: message,
-            });
-      
-            // Send the payload
-            xhr.send(payload);
+            // Get the last_contribution and check if already in array
+            allContrubutions.push(getUsername(data[0].last_contribution.user));
 
-            for(var i=0; data.data[0].event_data.top_contributions.length; i++) {
-                topContributionsHistory[data.data[0].event_data.top_contributions[i].user] = {
-                  'user_name': getUsername(accessToken, data.data[0].event_data.top_contributions[i].user),
-                  'type': data.data[0].event_data.top_contributions[i].type,
-                  'amount': data.data[0].event_data.top_contributions[i].total
-                };
+            for(let i=0; i<allContrubutions.length; i++) {
+              console.log(allContrubutions[i]);
             }
         } else {
           console.log('No active Hype Train');
