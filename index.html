@@ -10,6 +10,8 @@
     // Define your Twitch API client ID and redirect URI
     const clientId = '8p069a6yd66co1xpzq2pmhrx0ykqxx';
     const redirectUri = 'https://custom-hypetrain.vercel.app/';
+    const currentHypeTrain = {};
+    const userData = {};
 
     // Canvas setup
     const canvas = document.getElementById('myCanvas');
@@ -39,9 +41,9 @@
       .then(response => response.json())
       .then(data => {
         console.log('User Info:', data);
-
+        userData = data;
         // Check for an active Hype Train
-        checkHypeTrain(accessToken, data.data[0].id);
+        checkHypeTrain(accessToken, data);
       })
       .catch(error => {
         console.error('Error fetching user info:', error);
@@ -60,28 +62,29 @@
       .then(response => response.json())
       .then(data => {
         if (data.data.length > 0) {
-          console.log('Active Hype Train:', data);
-          const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
-          const message = JSON.stringify(data);
-          const xhr = new XMLHttpRequest();
-          xhr.open('POST', webhookUrl, true);
-          xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    
-          // Construct the message payload
-          const payload = JSON.stringify({
-            content: message,
-          });
-    
-          // Send the payload
-          xhr.send(payload);
-        
-
+          if (currentHypeTrain === {}){
+            console.log('Active Hype Train:', data);
+            const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
+            const message = JSON.stringify(data);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', webhookUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      
+            // Construct the message payload
+            const payload = JSON.stringify({
+              content: message,
+            });
+      
+            // Send the payload
+            xhr.send(payload);
+          }
         } else {
           console.log('No active Hype Train');
           const message = "Geen hypetrain sukkel!"
           // Clear the canvas if no active Hype Train
           const xhr = new XMLHttpRequest();
-          xhr.open('POST', discordWebhookUrl, true);
+          const webhookUrl = "https://discord.com/api/webhooks/1148340655840579615/sM8hKS4Pv_lNxwGMWY1RS46kp523-nyclpOY3Z6zaHbysVRFJK9V0TUeLeGLRQCzZaiO";
+          xhr.open('POST', webhookUrl, true);
           xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     
           // Construct the message payload
@@ -102,6 +105,7 @@
     if (window.location.hash) {
       const accessToken = window.location.hash.substring(1).split('&')[0].split('=')[1];
       getUserInfo(accessToken);
+      setTimeout(checkHypeTrain(accessToken, userData.data[0].id), 5000);
     } else {
       // If not redirected, initiate the authentication flow
       authenticateWithTwitch();
