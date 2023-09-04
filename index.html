@@ -86,12 +86,12 @@
       .then(data => {
         if (data.data.length > 0) {
             console.log('Active Hype Train:', data);
-            // Get the last_contribution and check if already in array
-            allContrubutions.push(getUsername(accessToken, data.data[0].event_data.last_contribution.user));
-
-            for(let i=0; i<allContrubutions.length; i++) {
-              console.log(allContrubutions[i]);
+            lastUser = getUsername(accessToken, data.data[0].event_data.last_contribution.user);
+            if (!in_array(lastUser, allContrubutions)) {
+              allContrubutions.push(lastUser);
             }
+
+            console.log(allContrubutions);
         } else {
           console.log('No active Hype Train');
           topContributionsHistory = {};
