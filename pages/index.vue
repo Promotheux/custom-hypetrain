@@ -22,7 +22,7 @@ export default defineComponent({
   methods: {
       initiateOAuth() {
         localStorage.setItem('initalized','true');
-        const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${twitchClientId}&redirect_uri=${twitchRedirectUri}&scope=channel:read:hype_train+chat:read+chat:edit&response_type=token`;
+        const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${this.$config.public.twitchClientId}&redirect_uri=${this.$config.public.twitchRedirectUri}&scope=channel:read:hype_train+chat:read+chat:edit&response_type=token`;
         navigateTo(authUrl, {external: true});
       },
       async isValid(accessToken){
