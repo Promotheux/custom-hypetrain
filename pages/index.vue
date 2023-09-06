@@ -21,7 +21,6 @@ export default defineComponent({
   },
   methods: {
       initiateOAuth() {
-        localStorage.setItem('initalized','true');
         const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${this.$config.public.twitchClientId}&redirect_uri=${this.$config.public.twitchRedirectUri}&scope=channel:read:hype_train+chat:read+chat:edit&response_type=token`;
         navigateTo(authUrl, {external: true});
       },
@@ -84,7 +83,7 @@ export default defineComponent({
     },
   },
   async mounted(){
-    if(this.$route.hash && this.$route.hash.indexOf('access_token') > -1 && localStorage.getItem('initialized')){
+    if(this.$route.hash && this.$route.hash.indexOf('access_token') > -1){
       this.isValid(this.$route.hash.substring(1).split('&')[0].split('=')[1]);
     } else {
       this.initiateOAuth();
