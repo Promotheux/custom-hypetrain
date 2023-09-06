@@ -1,6 +1,6 @@
 {
-  "name": "nuxt3-starter",
-  "description": "A better nuxt3 starter template",
+  "name": "custom-hypetrain",
+  "description": "A Custom Hypetrain",
   "private": false,
   "scripts": {
     "dev": "nuxt dev --port 3000 ",
